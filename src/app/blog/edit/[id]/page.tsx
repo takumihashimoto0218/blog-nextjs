@@ -7,7 +7,7 @@ import { Toaster, toast } from 'react-hot-toast';
 
 const editBlog = async (title: string | undefined, description: string |  undefined,
 id: number) => {
-  const res = await fetch(`http://localhost:3000/api/blog/${id}`, {
+  const res = await fetch(`http://blog-nextjs-sigma-lemon.vercel.app/api/blog/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -19,13 +19,13 @@ id: number) => {
 };
 
 const getBlogById = async (id: number) => {
-    const res = await fetch(`http://localhost:3000/api/blog/${id}`);
+    const res = await fetch(`http://blog-nextjs-sigma-lemon.vercel.app/api/blog/${id}`);
     const data = await res.json();
     return data.post;
   };
 
 const deleteBlog = async (id: number) => {
-    const res = await fetch(`http://localhost:3000/api/blog/${id}`, {
+    const res = await fetch(`http://blog-nextjs-sigma-lemon.vercel.app/api/blog/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
