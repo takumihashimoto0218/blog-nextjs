@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 async function fetchAllBlogs() {
-  const res = await fetch(`http://blog-nextjs-sigma-lemon.vercel.app/api/blog`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
     cache: "no-store", //SSR
   });
 
