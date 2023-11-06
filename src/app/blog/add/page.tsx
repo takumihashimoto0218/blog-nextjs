@@ -31,7 +31,7 @@ const PostBlog = () => {
 
     toast.dismiss();
     router.push("/");
-    router.refresh();
+    // router.refresh();
   }
   return (
     <>
