@@ -47,8 +47,9 @@ const EditPost = ({params}: {params: {id: number }}) => {
 
     toast.success("編集に成功しました！")
 
+    toast.dismiss();
     router.push("/");
-    router.refresh();
+    // router.refresh();
   }
 
   const handleDelete = async () => {
