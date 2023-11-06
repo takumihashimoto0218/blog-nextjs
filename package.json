@@ -6,7 +6,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "build": "prisma generate && next build"
+    "build": "prisma generate && prisma db push && next build"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.0.0",
