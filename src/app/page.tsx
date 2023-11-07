@@ -3,8 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 async function fetchAllBlogs() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
-    cache: "no-store", //SSR
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    console.error('The NEXT_PUBLIC_API_URL environment variable is not set.');
+    return;
+  }
+
+  const res = await fetch(`${apiUrl}/blog`, {
+    cache: "no-store", // SSR
   });
 
   const data = await res.json();

@@ -4,16 +4,27 @@ import React, { useRef } from 'react'
 import { Toaster, toast } from 'react-hot-toast';
 
 const postBlog = async (title: string | undefined, description: string | undefined) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title, description}),
-  });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, description }),
+    });
 
-  return res.json();
+    if (!res.ok) {
+      // サーバーからの応答が OK ではない場合、エラーを投げる
+      throw new Error(`An error occurred: ${res.status} ${res.statusText}`);
+    }
+
+    return await res.json(); // レスポンスの JSON を解析して返す
+  } catch (error) {
+    console.error(error); // コンソールにエラーを出力
+    throw error; // エラーを再度投げるか、または適切なエラーハンドリングを行う
+  }
 };
+
 
 const PostBlog = () => {
 
