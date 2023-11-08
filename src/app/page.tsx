@@ -3,8 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 async function fetchAllBlogs() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, {
-    cache: "no-store", //SSR
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    console.error('The NEXT_PUBLIC_API_URL environment variable is not set.');
+    return;
+  }
+
+  const res = await fetch(`${apiUrl}/blog`, {
+    cache: "no-store", // SSR
   });
 
   const data = await res.json();
@@ -33,7 +39,7 @@ export default async function Home() {
       </div>
 
       <div className="w-full flex flex-col justify-center items-center">
-        {posts.map((post: PostType) => (
+        {posts?.map((post: PostType) => (
           <div key={post.id} className="w-3/4 p-4 rounded-md mx-3 my-2 bg-slate-300 flex flex-col justify-center">
             <div className="flex items-center my-3">
               <div className="mr-auto">

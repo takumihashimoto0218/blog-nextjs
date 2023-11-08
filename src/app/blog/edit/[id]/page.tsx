@@ -1,21 +1,28 @@
 "use client"
-import { isDynamicMetadataRoute } from 'next/dist/build/analysis/get-page-static-info';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef } from 'react'
 import { Toaster, toast } from 'react-hot-toast';
 
 
-const editBlog = async (title: string | undefined, description: string |  undefined,
-id: number) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title, description, id}),
-  });
+const editBlog = async (title: string | undefined, description: string |  undefined, id: number) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, description, id}),
+    });
 
-  return res.json();
+    if (!res.ok) {
+      throw new Error('APIの応答が正常ではありません。');
+    }
+
+    return res.json();
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const getBlogById = async (id: number) => {
@@ -69,8 +76,8 @@ const EditPost = ({params}: {params: {id: number }}) => {
       }
     }).catch(err => {
         toast.error("エラーが発生しました", {id: "1"})
-    })
-  }, [])
+    }), [params.id]
+  })
   return (
     <>
     <Toaster />
